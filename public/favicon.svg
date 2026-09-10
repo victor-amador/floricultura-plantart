@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Plantart">
+  <rect width="64" height="64" fill="#0d2a1d"/>
+  <path d="M18 47V16h14.4c7.6 0 12.5 4.2 12.5 10.8 0 6.8-5.1 11.1-12.9 11.1h-5.7V47H18Zm8.3-16.4h5.3c3 0 4.8-1.4 4.8-3.8 0-2.4-1.8-3.7-4.8-3.7h-5.3v7.5Z" fill="#f5efe4"/>
+  <path d="M39.5 15c.8 6.9-3.5 11.5-10 11.5C29.1 20.8 33.1 15.7 39.5 15Z" fill="#8c9163"/>
+</svg>
