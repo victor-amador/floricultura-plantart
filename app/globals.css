@@ -7,3 +7,5 @@
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
 .site-brand{width:72px;flex:0 0 72px}.footer-intro img{width:140px}
 @media (max-width:760px){.site-brand{width:64px;flex-basis:64px}}
+
+.location-section{grid-template-columns:.7fr 1.3fr;gap:24px}.location-media{min-height:280px}.location-media img{width:100%;height:100%;object-fit:cover}.location-section .map-frame{grid-column:1/-1}

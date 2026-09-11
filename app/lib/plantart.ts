@@ -48,14 +48,14 @@ export const plantart = {
 };
 
 export const productCategories = [
-  { name: "Plantas ornamentais", description: "Folhagens, espécies para interiores e plantas para áreas externas.", image: "/plantart-hero.png" },
-  { name: "Flores e orquídeas", description: "Cores, formas e espécies para presentear ou trazer mais vida ao ambiente.", image: "/plantart-hero.png" },
-  { name: "Mudas e frutíferas", description: "Mudas para cultivar em casa, no quintal ou em projetos maiores.", image: "/plantart-hero.png" },
-  { name: "Vasos e arranjos", description: "Composições para valorizar a planta e combinar com o seu espaço.", image: "/plantart-hero.png" },
-  { name: "Terras e substratos", description: "Materiais para preparo, plantio e cuidado do jardim.", image: "/plantart-hero.png" },
-  { name: "Adubos e fertilizantes", description: "Consulte a equipe para encontrar o cuidado adequado para sua planta.", image: "/plantart-hero.png" },
-  { name: "Gramas e pedras decorativas", description: "Acabamentos e elementos naturais para áreas externas.", image: "/plantart-hero.png" },
-  { name: "Acessórios de jardinagem", description: "Itens de apoio para cultivar, manter e transformar o jardim.", image: "/plantart-hero.png" },
+  { name: "Plantas ornamentais", description: "Folhagens, espécies para interiores e plantas para áreas externas.", image: "/images/cards/plantas-ornamentais.webp", imageAlt: "Plantas ornamentais em um garden center brasileiro" },
+  { name: "Flores e orquídeas", description: "Cores, formas e espécies para presentear ou trazer mais vida ao ambiente.", image: "/images/cards/flores.webp", imageAlt: "Flores e orquídeas em exposição em um garden center" },
+  { name: "Mudas e frutíferas", description: "Mudas para cultivar em casa, no quintal ou em projetos maiores.", image: "/images/cards/mudas-frutiferas.webp", imageAlt: "Mudas e frutíferas jovens em viveiro" },
+  { name: "Vasos e arranjos", description: "Composições para valorizar a planta e combinar com o seu espaço.", image: "/images/cards/vasos-arranjos.webp", imageAlt: "Vasos e arranjos em exposição no garden center" },
+  { name: "Terras e substratos", description: "Materiais para preparo, plantio e cuidado do jardim.", image: "/images/cards/terras-substratos.webp", imageAlt: "Terras e substratos para jardinagem" },
+  { name: "Adubos e fertilizantes", description: "Consulte a equipe para encontrar o cuidado adequado para sua planta.", image: "/images/cards/adubos-fertilizantes.webp", imageAlt: "Materiais genéricos de adubação e fertilização para plantas" },
+  { name: "Gramas e pedras decorativas", description: "Acabamentos e elementos naturais para áreas externas.", image: "/images/cards/gramas-pedras-decorativas.webp", imageAlt: "Grama e pedras decorativas para áreas externas" },
+  { name: "Acessórios de jardinagem", description: "Itens de apoio para cultivar, manter e transformar o jardim.", image: "/images/cards/acessorios-jardinagem.webp", imageAlt: "Acessórios e ferramentas para jardinagem" },
 ];
 
 export const realWorkImages = [
@@ -133,9 +133,10 @@ export const websiteJsonLd = {
 };
 
 export const imageBank = {
+  facade: "/images/plantart/fachada-plantart.webp",
   heroGarden: "/plantart-hero.png",
   tropicalGarden: "/plantart-hero.png",
-  greenhouse: "/plantart-hero.png",
+  greenhouse: "/images/plantart/fachada-plantart.webp",
   foliage: "/plantart-hero.png",
   orchard: "/plantart-hero.png",
   orchids: "/plantart-hero.png",
