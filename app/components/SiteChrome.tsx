@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { plantart } from "../lib/plantart";
 
@@ -9,11 +10,24 @@ const navItems = [["Início", "/"], ["Garden Center", "/garden-center"], ["Paisa
 
 export function Header() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuPath, setMenuPath] = useState(pathname);
+  const isMenuOpen = menuOpen && menuPath === pathname;
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => { if (event.key === "Escape") setMenuOpen(false); };
+    document.addEventListener("keydown", closeOnEscape);
+    return () => document.removeEventListener("keydown", closeOnEscape);
+  }, [isMenuOpen]);
+  function toggleMenu() {
+    if (isMenuOpen) setMenuOpen(false);
+    else { setMenuPath(pathname); setMenuOpen(true); }
+  }
   return <header className="site-header">
     <Link className="site-brand" href="/" aria-label="Plantart — página inicial"><Image src="/plantart-logo-mark.png" alt="Plantart Garden Center e Paisagismo" width={72} height={72} priority /></Link>
     <nav className="desktop-nav" aria-label="Navegação principal">{navItems.map(([label, href]) => <Link className={pathname === href ? "active" : ""} href={href} key={href} aria-current={pathname === href ? "page" : undefined}>{label}</Link>)}</nav>
     <a className="header-whatsapp" href={plantart.whatsappGeneralUrl} target="_blank" rel="noreferrer">Falar no WhatsApp</a>
-    <details className="mobile-menu"><summary aria-label="Abrir menu"><span /><span /><span /></summary><nav aria-label="Navegação mobile">{navItems.map(([label, href]) => <Link href={href} key={href}>{label}</Link>)}<a href={plantart.whatsappGeneralUrl} target="_blank" rel="noreferrer">Falar no WhatsApp</a></nav></details>
+    <div className="mobile-menu"><button className="mobile-menu__toggle" type="button" aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={isMenuOpen} aria-controls="mobile-navigation" onClick={toggleMenu}><span /><span /><span /></button>{isMenuOpen && <nav id="mobile-navigation" className="mobile-menu__panel" aria-label="Navegação mobile">{navItems.map(([label, href]) => <Link href={href} key={href} onClick={() => setMenuOpen(false)}>{label}</Link>)}<a href={plantart.whatsappGeneralUrl} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>Falar no WhatsApp</a></nav>}</div>
   </header>;
 }
 

@@ -90,3 +90,26 @@ test("emits crawlable SEO metadata on every public route", async () => {
     for (const [, block] of jsonLdBlocks) assert.doesNotThrow(() => JSON.parse(block), pathname);
   }
 });
+
+test("implements the accessible mobile menu behavior", async () => {
+  const header = await readFile(new URL("../app/components/SiteChrome.tsx", import.meta.url), "utf8");
+  assert.match(header, /useState/);
+  assert.match(header, /aria-expanded=\{isMenuOpen\}/);
+  assert.match(header, /aria-controls="mobile-navigation"/);
+  assert.match(header, /event\.key === "Escape"/);
+  assert.match(header, /setMenuPath\(pathname\)/);
+  assert.match(header, /onClick=\{\(\) => setMenuOpen\(false\)\}/);
+  assert.match(header, /isMenuOpen && <nav/);
+});
+
+test("keeps the catalog factual and WhatsApp messages product-specific", async () => {
+  const catalog = await readFile(new URL("../app/lib/catalogo.ts", import.meta.url), "utf8");
+  const showcase = await readFile(new URL("../app/components/CatalogShowcase.tsx", import.meta.url), "utf8");
+  assert.match(catalog, /Kit de jardinagem/);
+  assert.match(catalog, /Regador/);
+  assert.doesNotMatch(catalog, /Grama|Pá de jardinagem|tesoura|ancinho/i);
+  assert.doesNotMatch(catalog, /gramas-pedras-decorativas/);
+  assert.match(catalog, /pedras-decorativas/);
+  assert.match(showcase, /Olá! Vi \$\{item\.nome\} no site da Plantart/);
+  assert.match(showcase, /Imagens ilustrativas/);
+});

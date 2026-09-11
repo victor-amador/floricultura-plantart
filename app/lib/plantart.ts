@@ -48,14 +48,14 @@ export const plantart = {
 };
 
 export const productCategories = [
-  { name: "Plantas ornamentais", description: "Folhagens, espécies para interiores e plantas para áreas externas.", image: "/images/cards/plantas-ornamentais.webp", imageAlt: "Plantas ornamentais em um garden center brasileiro" },
-  { name: "Flores e orquídeas", description: "Cores, formas e espécies para presentear ou trazer mais vida ao ambiente.", image: "/images/cards/flores.webp", imageAlt: "Flores e orquídeas em exposição em um garden center" },
-  { name: "Mudas e frutíferas", description: "Mudas para cultivar em casa, no quintal ou em projetos maiores.", image: "/images/cards/mudas-frutiferas.webp", imageAlt: "Mudas e frutíferas jovens em viveiro" },
-  { name: "Vasos e arranjos", description: "Composições para valorizar a planta e combinar com o seu espaço.", image: "/images/cards/vasos-arranjos.webp", imageAlt: "Vasos e arranjos em exposição no garden center" },
-  { name: "Terras e substratos", description: "Materiais para preparo, plantio e cuidado do jardim.", image: "/images/cards/terras-substratos.webp", imageAlt: "Terras e substratos para jardinagem" },
-  { name: "Adubos e fertilizantes", description: "Consulte a equipe para encontrar o cuidado adequado para sua planta.", image: "/images/cards/adubos-fertilizantes.webp", imageAlt: "Materiais genéricos de adubação e fertilização para plantas" },
-  { name: "Gramas e pedras decorativas", description: "Acabamentos e elementos naturais para áreas externas.", image: "/images/cards/gramas-pedras-decorativas.webp", imageAlt: "Grama e pedras decorativas para áreas externas" },
-  { name: "Acessórios de jardinagem", description: "Itens de apoio para cultivar, manter e transformar o jardim.", image: "/images/cards/acessorios-jardinagem.webp", imageAlt: "Acessórios e ferramentas para jardinagem" },
+  { name: "Plantas ornamentais", slug: "plantas-ornamentais", description: "Folhagens, espécies para interiores e plantas para áreas externas.", image: "/images/cards/plantas-ornamentais.webp", imageAlt: "Plantas ornamentais em um garden center brasileiro" },
+  { name: "Flores e orquídeas", slug: "flores-orquideas", description: "Cores, formas e espécies para presentear ou trazer mais vida ao ambiente.", image: "/images/cards/flores.webp", imageAlt: "Flores e orquídeas em exposição em um garden center" },
+  { name: "Mudas e frutíferas", slug: "mudas-frutiferas", description: "Mudas para cultivar em casa, no quintal ou em projetos maiores.", image: "/images/cards/mudas-frutiferas.webp", imageAlt: "Mudas e frutíferas jovens em viveiro" },
+  { name: "Vasos e arranjos", slug: "vasos-arranjos", description: "Composições para valorizar a planta e combinar com o seu espaço.", image: "/images/cards/vasos-arranjos.webp", imageAlt: "Vasos e arranjos em exposição no garden center" },
+  { name: "Terras e substratos", slug: "terras-substratos", description: "Materiais para preparo, plantio e cuidado do jardim.", image: "/images/cards/terras-substratos.webp", imageAlt: "Terras e substratos para jardinagem" },
+  { name: "Adubos e fertilizantes", slug: "adubos-fertilizantes", description: "Consulte a equipe para encontrar o cuidado adequado para sua planta.", image: "/images/cards/adubos-fertilizantes.webp", imageAlt: "Materiais genéricos de adubação e fertilização para plantas" },
+  { name: "Pedras decorativas", slug: "pedras-decorativas", description: "Acabamentos e elementos naturais para áreas externas.", image: "/images/cards/pedras-decorativas.webp", imageAlt: "Pedras decorativas para áreas externas" },
+  { name: "Jardinagem", slug: "jardinagem", description: "Itens de apoio para cultivar, manter e transformar o jardim.", image: "/images/cards/acessorios-jardinagem.webp", imageAlt: "Acessórios para jardinagem" },
 ];
 
 export const realWorkImages = [
