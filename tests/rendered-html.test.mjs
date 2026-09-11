@@ -112,4 +112,22 @@ test("keeps the catalog factual and WhatsApp messages product-specific", async (
   assert.match(catalog, /pedras-decorativas/);
   assert.match(showcase, /Olá! Vi \$\{item\.nome\} no site da Plantart/);
   assert.match(showcase, /Imagens ilustrativas/);
+  const productEntries = [...catalog.matchAll(/\["([^\"]+)",\s*"(?:plantas-ornamentais|flores-orquideas|mudas-frutiferas|vasos-arranjos|terras-substratos|adubos-fertilizantes|pedras-decorativas|jardinagem)"/g)].map((match) => match[1]);
+  assert.equal(productEntries.length, 53);
+  assert.equal(new Set(productEntries).size, 53);
+  assert.match(catalog, /Imagem ilustrativa da categoria/);
+});
+
+test("keeps production image containers visible and the home flow non-repetitive", async () => {
+  const home = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+  const garden = await readFile(new URL("../app/garden-center/page.tsx", import.meta.url), "utf8");
+  const css = await readFile(new URL("../app/globals.css", import.meta.url), "utf8");
+  assert.match(home, /feature-image.*width=\{1320\}.*height=\{675\}/s);
+  assert.match(home, /work-preview-card.*width=\{item\.width\}.*height=\{item\.height\}/s);
+  assert.doesNotMatch(home, /<VisitCta/);
+  assert.match(garden, /page-intro-image.*width=\{1713\}.*height=\{918\}/s);
+  assert.match(css, /\.feature-image\{position:relative/);
+  assert.match(css, /\.work-preview-card img\{position:absolute;inset:0/);
+  assert.match(css, /\.page-intro-image\{position:relative/);
+  assert.match(css, /@media \(max-width:760px\).*\.footer-grid\{grid-template-columns:1fr\}/s);
 });

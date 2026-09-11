@@ -28,6 +28,7 @@ const productRows: Array<[string, string, string]> = [
   ["Kit de jardinagem", "jardinagem", images.jardinagem], ["Regador", "jardinagem", images.jardinagem],
 ];
 
+const categoryLabels: Record<string, string> = { "plantas-ornamentais": "Plantas ornamentais", "flores-orquideas": "Flores e orquídeas", "mudas-frutiferas": "Mudas e frutíferas", "vasos-arranjos": "Vasos e arranjos", "terras-substratos": "Terras e substratos", "adubos-fertilizantes": "Adubos e fertilizantes", "pedras-decorativas": "Pedras decorativas", jardinagem: "Jardinagem" };
 function slugify(value: string) { return value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""); }
 
-export const catalogo: CatalogProduct[] = productRows.map(([nome, categoria, imagem]) => ({ nome, slug: slugify(nome), categoria, imagem, alt: `${nome}, imagem ilustrativa de categoria para jardinagem` }));
+export const catalogo: CatalogProduct[] = productRows.map(([nome, categoria, imagem]) => ({ nome, slug: slugify(nome), categoria, imagem, alt: `Imagem ilustrativa da categoria ${categoryLabels[categoria]}` }));
