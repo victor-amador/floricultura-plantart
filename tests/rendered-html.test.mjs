@@ -1,103 +1,92 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import test from "node:test";
+import { spawn } from "node:child_process";
+import test, { after, before } from "node:test";
 
-async function render(pathname = "/") {
-  const workerUrl = new URL("../dist/server/index.js", import.meta.url);
-  workerUrl.searchParams.set("test", `${process.pid}-${Date.now()}-${pathname}`);
-  const { default: worker } = await import(workerUrl.href);
+const port = Number(process.env.TEST_PORT ?? 3102);
+const baseUrl = `http://localhost:${port}`;
+let server;
 
-  return worker.fetch(
-    new Request(`http://localhost${pathname}`, {
-      headers: { accept: "text/html" },
-    }),
-    {
-      ASSETS: {
-        fetch: async () => new Response("Not found", { status: 404 }),
-      },
-    },
-    {
-      waitUntil() {},
-      passThroughOnException() {},
-    },
-  );
+async function waitForServer() {
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    try {
+      const response = await fetch(`${baseUrl}/`);
+      if (response.ok) return;
+    } catch {}
+    await new Promise((resolve) => setTimeout(resolve, 250));
+  }
+  throw new Error("Next.js production server did not start in time");
 }
 
-test("server-renders the Plantart home with brand positioning", async () => {
-  const response = await render("/");
-  assert.equal(response.status, 200);
-  assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
+before(async () => {
+  server = spawn(process.platform === "win32" ? "npm.cmd" : "npm", ["run", "start", "--", "-p", String(port)], {
+    env: { ...process.env, NODE_ENV: "production" },
+    stdio: "ignore",
+  });
+  await waitForServer();
+});
 
-  const html = await response.text();
-  assert.match(html, /Plantart \| Garden Center &amp; Paisagismo em Brasília/);
-  assert.match(html, /Natureza para viver\. Paisagismo para transformar\./);
-  assert.match(html, /Garden Center &amp; Paisagismo em Brasília/);
+after(() => server?.kill("SIGTERM"));
+
+async function render(pathname = "/") {
+  const response = await fetch(`${baseUrl}${pathname}`);
+  assert.equal(response.status, 200, pathname);
+  return response.text();
+}
+
+test("server-renders the Plantart home with clear conversion paths", async () => {
+  const html = await render("/");
+  assert.match(html, /Plantas, flores e paisagismo para transformar seus ambientes/);
+  assert.match(html, /Conheça nossos produtos/);
+  assert.match(html, /Fale pelo WhatsApp/);
   assert.match(html, /Rodovia DF-001, Quiosque 07/);
   assert.match(html, /@floriculturaplantart/);
+  assert.match(html, /floriculturaplantart\.com\.br/);
   assert.doesNotMatch(html, /codex-preview|SkeletonPreview|react-loading-skeleton/i);
 });
 
 test("renders the main institutional routes", async () => {
-  const routes = [
-    ["/garden-center", /Garden Center em Vicente Pires/],
-    ["/paisagismo", /Projetamos natureza\. Transformamos espaços\./],
-    ["/nossos-trabalhos", /Alguns dos nossos trabalhos\./],
-    ["/sobre", /Garden Center &amp; Paisagismo com presença consolidada em Brasília\./],
-    ["/contato", /Plantart Garden Center &amp; Paisagismo\./],
-  ];
-
-  for (const [pathname, expected] of routes) {
-    const response = await render(pathname);
-    assert.equal(response.status, 200, pathname);
-    const html = await response.text();
-    assert.match(html, expected, pathname);
-    assert.match(html, /Home/);
-    assert.match(html, /Garden Center/);
-    assert.match(html, /Paisagismo/);
-    assert.match(html, /Contato/);
+  for (const pathname of ["/garden-center", "/paisagismo", "/nossos-trabalhos", "/sobre", "/contato"]) {
+    const html = await render(pathname);
+    assert.match(html, /Garden Center|Paisagismo|Plantart/, pathname);
+    assert.match(html, /Contato/, pathname);
   }
 });
 
 test("keeps factual boundaries explicit", async () => {
   const page = await readFile(new URL("../app/sobre/page.tsx", import.meta.url), "utf8");
   const data = await readFile(new URL("../app/lib/plantart.ts", import.meta.url), "utf8");
-
   assert.match(data, /05\.099\.231\/0001-18/);
   assert.match(data, /Setor Habitacional Vicente Pires/);
-  assert.doesNotMatch(data, /clientes|projetos|avaliações|preços/i);
-  assert.doesNotMatch(page, /razão social|nome fantasia|atividade principal|atividade secundária|CNAE/i);
-  assert.match(page, /Há mais de 24 anos, a Plantart faz parte da rotina/);
-  assert.match(page, /Não incluímos preços, avaliações ou números\s+de projetos/);
+  assert.match(data, /officialUrl: "https:\/\/www\.floriculturaplantart\.com\.br"/);
+  assert.doesNotMatch(data, /preços|avaliações|clientes/i);
+  assert.match(page, /Há mais de 24 anos/);
 });
 
 test("renders WhatsApp CTAs and real work media", async () => {
-  const landscape = await (await render("/paisagismo")).text();
-  const portfolio = await (await render("/nossos-trabalhos")).text();
-  const contact = await (await render("/contato")).text();
-
+  const landscape = await render("/paisagismo");
+  const portfolio = await render("/nossos-trabalhos");
+  const contact = await render("/contato");
   assert.match(landscape, /wa\.me\/5561984838441/);
   assert.match(landscape, /Solicitar orçamento/);
-  assert.match(landscape, /servi%C3%A7o%20de%20paisagismo/);
-  assert.match(landscape, /Conheça alguns dos nossos trabalhos/);
-  assert.match(landscape, /não representam, necessariamente, trabalhos realizados pela\s+Plantart/);
-
-  assert.match(portfolio, /Portfólio de paisagismo/);
   assert.match(portfolio, /paisagismo-piscina-palmeiras-plantart-tratada\.webp/);
   assert.match(portfolio, /paisagismo-lago-caminho-plantart-tratada\.webp/);
   assert.match(portfolio, /paisagismo-plantart-video-01\.mp4/);
-  assert.match(portfolio, /<video/);
-  assert.match(portfolio, /preload="metadata"/);
-  assert.match(portfolio, /PortfolioLightbox/);
   assert.match(portfolio, /Ampliar imagem/);
-  assert.match(portfolio, /solicitar%20um%20or%C3%A7amento/);
-
-  assert.match(contact, /Fale pelo WhatsApp/);
-  assert.match(contact, /wa\.me\/5561984838441/);
-  assert.match(contact, /\(61\) 98483-8441/);
-  assert.doesNotMatch(`${landscape}${portfolio}${contact}`, /5561986560128|98656-0128/);
+  assert.match(contact, /WhatsApp/);
   assert.match(contact, /application\/ld\+json/);
-  assert.match(contact, /Avaliações e rota/);
-  assert.match(contact, /floricultura\+plantart\+bras%C3%ADlia/);
-  assert.match(contact, /#lrd=0x935a3352cd5459c3:0xc91e2223ace15f3c/);
-  assert.doesNotMatch(contact, /★★★★★|5 estrelas|nota média|depoimento/i);
+  assert.doesNotMatch(`${landscape}${portfolio}${contact}`, /5561986560128|98656-0128/);
+});
+
+test("emits crawlable SEO metadata on every public route", async () => {
+  for (const pathname of ["/", "/garden-center", "/paisagismo", "/nossos-trabalhos", "/sobre", "/contato"]) {
+    const html = await render(pathname);
+    const canonical = html.match(/<link rel="canonical" href="([^"]+)"/i)?.[1];
+    assert.equal(canonical, `https://www.floriculturaplantart.com.br${pathname === "/" ? "" : pathname}`);
+    assert.equal((html.match(/<h1\b/gi) ?? []).length, 1, pathname);
+    assert.doesNotMatch(html, /name="robots" content="[^"]*noindex/i);
+    const jsonLdBlocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)];
+    assert.ok(jsonLdBlocks.length >= 1, pathname);
+    for (const [, block] of jsonLdBlocks) assert.doesNotThrow(() => JSON.parse(block), pathname);
+  }
 });

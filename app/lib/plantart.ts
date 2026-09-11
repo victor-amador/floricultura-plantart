@@ -26,22 +26,36 @@ export const plantart = {
     "https://www.google.com/search?q=floricultura+plantart+bras%C3%ADlia&rlz=1C5AJCO_enBR1204BR1205&oq=flor&gs_lcrp=EgZjaHJvbWUqCAgBEEUYJxg7MgYIABBFGDkyCAgBEEUYJxg7MgYIAhAjGCcyCggDEAAYkgMYgAQyCggEEAAYkgMYgAQyBggFEEUYPDIGCAYQRRg9MgYIBxBFGDzSAQgyNDAxajBqN6gCALACAA&sourceid=chrome&source=chrome.ob&ie=UTF-8#lrd=0x935a3352cd5459c3:0xc91e2223ace15f3c,1,,,,?",
   mapEmbed:
     "https://www.google.com/maps?q=Floricultura%20Plantart%20Rodovia%20DF-001%20Quiosque%2007%20Setor%20Habitacional%20Vicente%20Pires%20Bras%C3%ADlia%20DF%2072008-001&output=embed",
+  officialUrl: "https://www.floriculturaplantart.com.br",
+  telephoneE164: "+5561984838441",
+  address: {
+    streetAddress: "Rodovia DF-001, Quiosque 07",
+    addressLocality: "Brasília",
+    addressRegion: "DF",
+    postalCode: "72008-001",
+    addressCountry: "BR",
+  },
   hours: [
     ["Seg-Sex", "08h às 18h"],
     ["Sáb", "09h às 18h"],
     ["Dom", "09h às 13h"],
   ],
+  openingHours: [
+    { "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "18:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Saturday", opens: "09:00", closes: "18:00" },
+    { "@type": "OpeningHoursSpecification", dayOfWeek: "Sunday", opens: "09:00", closes: "13:00" },
+  ],
 };
 
 export const productCategories = [
-  "Ornamentais",
-  "Frutíferas",
-  "Hortaliças",
-  "Orquídeas",
-  "Arranjos",
-  "Adubos & fertilizantes",
-  "Substratos & terras",
-  "Seixos decorativos",
+  { name: "Plantas ornamentais", description: "Folhagens, espécies para interiores e plantas para áreas externas.", image: "/plantart-hero.png" },
+  { name: "Flores e orquídeas", description: "Cores, formas e espécies para presentear ou trazer mais vida ao ambiente.", image: "/plantart-hero.png" },
+  { name: "Mudas e frutíferas", description: "Mudas para cultivar em casa, no quintal ou em projetos maiores.", image: "/plantart-hero.png" },
+  { name: "Vasos e arranjos", description: "Composições para valorizar a planta e combinar com o seu espaço.", image: "/plantart-hero.png" },
+  { name: "Terras e substratos", description: "Materiais para preparo, plantio e cuidado do jardim.", image: "/plantart-hero.png" },
+  { name: "Adubos e fertilizantes", description: "Consulte a equipe para encontrar o cuidado adequado para sua planta.", image: "/plantart-hero.png" },
+  { name: "Gramas e pedras decorativas", description: "Acabamentos e elementos naturais para áreas externas.", image: "/plantart-hero.png" },
+  { name: "Acessórios de jardinagem", description: "Itens de apoio para cultivar, manter e transformar o jardim.", image: "/plantart-hero.png" },
 ];
 
 export const realWorkImages = [
@@ -86,65 +100,48 @@ export const beforeAfterItems: Array<{
 }> = [];
 
 export const localBusinessJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "GardenStore",
+  "@type": ["LocalBusiness", "Florist"],
+  "@id": `${plantart.officialUrl}/#localbusiness`,
   name: "Plantart",
   legalName: plantart.legalName,
   description: "Garden Center e paisagismo em Brasília/DF.",
-  url: "https://floricultura-plantart.victor-rodrigues-ama.chatgpt.site",
-  telephone: "+5561984838441",
+  url: plantart.officialUrl,
+  telephone: plantart.telephoneE164,
+  image: `${plantart.officialUrl}/plantart-logo-mark.png`,
   sameAs: [plantart.instagramUrl],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Rodovia DF-001, Quiosque 07",
-    addressLocality: "Brasília",
-    addressRegion: "DF",
-    postalCode: "72008-001",
-    addressCountry: "BR",
-  },
-  openingHoursSpecification: [
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      opens: "08:00",
-      closes: "18:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Saturday",
-      opens: "09:00",
-      closes: "18:00",
-    },
-    {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: "Sunday",
-      opens: "09:00",
-      closes: "13:00",
-    },
-  ],
+  address: { "@type": "PostalAddress", ...plantart.address },
+  openingHoursSpecification: plantart.openingHours,
+};
+
+export const organizationJsonLd = {
+  "@type": "Organization",
+  "@id": `${plantart.officialUrl}/#organization`,
+  name: plantart.displayName,
+  legalName: plantart.legalName,
+  url: plantart.officialUrl,
+  logo: `${plantart.officialUrl}/plantart-logo-mark.png`,
+  sameAs: [plantart.instagramUrl],
+};
+
+export const websiteJsonLd = {
+  "@type": "WebSite",
+  "@id": `${plantart.officialUrl}/#website`,
+  name: plantart.displayName,
+  url: plantart.officialUrl,
+  publisher: { "@id": `${plantart.officialUrl}/#organization` },
+  inLanguage: "pt-BR",
 };
 
 export const imageBank = {
-  heroGarden:
-    "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=2400&q=85",
-  tropicalGarden:
-    "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&w=2200&q=85",
-  greenhouse:
-    "https://images.unsplash.com/photo-1485955900006-10f4d324d411?auto=format&fit=crop&w=1800&q=85",
-  foliage:
-    "https://images.unsplash.com/photo-1545239705-1564e58b9e4a?auto=format&fit=crop&w=1600&q=85",
-  orchard:
-    "https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=1600&q=85",
-  orchids:
-    "https://images.unsplash.com/photo-1525310072745-f49212b5ac6d?auto=format&fit=crop&w=1600&q=85",
-  stones:
-    "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1600&q=85",
-  landscapeHero:
-    "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=2400&q=85",
-  architectureGarden:
-    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=2200&q=85",
-  patio:
-    "https://images.unsplash.com/photo-1600210492493-0946911123ea?auto=format&fit=crop&w=2000&q=85",
-  texture:
-    "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1800&q=85",
+  heroGarden: "/plantart-hero.png",
+  tropicalGarden: "/plantart-hero.png",
+  greenhouse: "/plantart-hero.png",
+  foliage: "/plantart-hero.png",
+  orchard: "/plantart-hero.png",
+  orchids: "/plantart-hero.png",
+  stones: "/trabalhos/paisagismo-lago-caminho-plantart-tratada.webp",
+  landscapeHero: "/trabalhos/paisagismo-piscina-palmeiras-plantart-tratada.webp",
+  architectureGarden: "/trabalhos/paisagismo-lago-caminho-plantart-tratada.webp",
+  patio: "/trabalhos/paisagismo-piscina-palmeiras-plantart-tratada.webp",
+  texture: "/plantart-hero.png",
 };

@@ -1,155 +1,21 @@
-/* eslint-disable @next/next/no-img-element */
-import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import { MapBlock, VisitCta } from "./components/SiteChrome";
-import { imageBank, plantart, productCategories } from "./lib/plantart";
+import { imageBank, plantart, productCategories, realWorkImages } from "./lib/plantart";
+import { pageMetadata } from "./lib/seo";
 
-export const metadata: Metadata = {
-  title: "Plantart | Garden Center & Paisagismo em Brasília",
-  description:
-    "Plantart é Garden Center e paisagismo em Brasília e Vicente Pires: plantas, jardinagem, seixos, substratos, adubos e projetos com natureza.",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Plantart | Garden Center & Paisagismo em Brasília",
-    description:
-      "Mais de 24 anos de atuação em Brasília, com Garden Center, plantas e paisagismo em Vicente Pires.",
-    images: ["/og.png"],
-  },
-};
+export const metadata: Metadata = pageMetadata({ title: "Floricultura, plantas e paisagismo em Brasília", description: "Floricultura e Garden Center em Vicente Pires, Brasília/DF, com plantas, flores, vasos, materiais de jardinagem e atendimento para paisagismo.", path: "/" });
 
 export default function Home() {
-  return (
-    <main>
-      <section className="home-hero page-hero">
-        <img src={imageBank.tropicalGarden} alt="Jardim tropical com folhagens densas e luz natural" />
-        <div className="hero-overlay" />
-        <div className="home-hero__content">
-          <p className="kicker">Garden Center & Paisagismo em Brasília</p>
-          <h1>Natureza para viver. Paisagismo para transformar.</h1>
-          <p>
-            Há mais de 24 anos, a Plantart reúne plantas, jardinagem e
-            paisagismo em Vicente Pires, Brasília.
-          </p>
-          <div className="hero-paths" aria-label="Principais caminhos da Plantart">
-            <span>Garden Center em Brasília</span>
-            <span>Paisagismo em Brasília</span>
-          </div>
-          <div className="action-row">
-            <Link className="btn btn--solid" href="/garden-center">
-              Visitar o Garden Center
-            </Link>
-            <a className="btn btn--light" href={plantart.whatsappLandscapeUrl} target="_blank" rel="noreferrer">
-              Solicitar orçamento
-            </a>
-            <Link className="hero-secondary-link" href="/paisagismo">
-              Conhecer o paisagismo
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      <section className="editorial-intro">
-        <div className="intro-number">
-          <span>24+</span>
-          <small>anos de atuação</small>
-        </div>
-        <div>
-          <p className="kicker">Plantart</p>
-          <h2>Um lugar para pensar a natureza como parte da arquitetura da vida.</h2>
-        </div>
-        <p>
-          Há mais de 24 anos, a Plantart faz parte da rotina de quem busca
-          plantas, materiais de jardinagem e paisagismo em Brasília. Um Garden
-          Center para escolher com calma e uma equipe voltada a transformar
-          áreas verdes com natureza.
-        </p>
-      </section>
-
-      <section className="home-garden split-editorial">
-        <div className="split-editorial__image tall-image">
-          <img src={imageBank.greenhouse} alt="Garden center com vasos e plantas ornamentais" />
-        </div>
-        <div className="split-editorial__copy">
-          <p className="kicker">Garden Center</p>
-          <h2>Plantas, texturas e materiais para compor ambientes vivos.</h2>
-          <p>
-            A variedade da Plantart passa por ornamentais, frutíferas,
-            hortaliças, orquídeas, arranjos, fertilizantes, substratos, terras e
-            seixos decorativos.
-          </p>
-          <div className="inline-list">
-            {productCategories.slice(0, 6).map((item) => (
-              <span key={item}>{item}</span>
-            ))}
-          </div>
-          <Link className="text-link" href="/garden-center">
-            Ver categorias
-          </Link>
-        </div>
-      </section>
-
-      <section className="landscape-feature">
-        <img src={imageBank.landscapeHero} alt="Jardim contemporâneo integrado à arquitetura residencial" />
-        <div>
-          <p className="kicker">Paisagismo</p>
-          <h2>Transformamos espaços através da natureza.</h2>
-          <p>
-            O paisagismo ganha destaque como um dos principais diferenciais da
-            Plantart: vegetação, materiais naturais e leitura do espaço para
-            criar ambientes externos mais sofisticados.
-          </p>
-          <Link className="btn btn--light" href="/paisagismo">
-            Conheça nosso paisagismo
-          </Link>
-        </div>
-      </section>
-
-      <section className="statement-band">
-        <p className="kicker">Experiência Plantart</p>
-        <h2>
-          Um encontro entre curadoria de plantas, materiais de jardinagem e
-          paisagismo para Brasília.
-        </h2>
-      </section>
-
-      <section className="experience-grid">
-        <article>
-          <span>01</span>
-          <h3>Escolha presencial</h3>
-          <p>Ambiente para ver espécies, tamanhos, vasos e composições de perto.</p>
-        </article>
-        <article>
-          <span>02</span>
-          <h3>Jardinagem completa</h3>
-          <p>Substratos, terras, adubos, fertilizantes, sementes e seixos.</p>
-        </article>
-        <article>
-          <span>03</span>
-          <h3>Paisagismo</h3>
-          <p>Uma frente dedicada a transformar espaços com natureza.</p>
-        </article>
-      </section>
-
-      <VisitCta />
-
-      <section className="contact-preview">
-        <div>
-          <p className="kicker">Localização</p>
-          <h2>{plantart.addressLine1}</h2>
-          <p>
-            {plantart.addressLine2}, {plantart.addressLine3}. {plantart.cep}.
-          </p>
-          <a className="text-link" href={plantart.instagramUrl} target="_blank" rel="noreferrer">
-            {plantart.instagram}
-          </a>
-          <a className="text-link contact-whatsapp-link" href={plantart.whatsappGeneralUrl} target="_blank" rel="noreferrer">
-            Fale pelo WhatsApp
-          </a>
-        </div>
-        <MapBlock />
-      </section>
-    </main>
-  );
+  return <main>
+    <section className="hero hero-home"><Image src={imageBank.heroGarden} alt="Garden Center Plantart com plantas, vasos e flores ao ar livre" fill priority sizes="100vw" /><div className="hero-shade" /><div className="hero-content container"><p className="eyebrow">Garden Center & Paisagismo em Brasília</p><h1>Plantas, flores e paisagismo para transformar seus ambientes.</h1><p className="hero-lead">Encontre espécies, materiais de jardinagem e soluções paisagísticas para deixar sua casa, empresa ou área externa mais viva.</p><div className="button-row"><Link className="btn btn--primary" href="/garden-center">Conheça nossos produtos</Link><a className="btn btn--light" href={plantart.whatsappGeneralUrl} target="_blank" rel="noreferrer">Fale pelo WhatsApp</a></div><div className="hero-proof"><span>24+ anos de atuação</span><span>Vicente Pires · Brasília</span></div></div></section>
+    <section className="section intro-section container"><div><p className="eyebrow">Tudo para cultivar</p><h2>Um Garden Center para escolher com calma e orientação.</h2></div><div><p>A Plantart reúne plantas ornamentais, flores, mudas, vasos, terras, substratos, adubos e outros materiais para jardinagem.</p><Link className="arrow-link" href="/garden-center">Ver Garden Center <span>→</span></Link></div></section>
+    <section className="section category-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">Encontre por categoria</p><h2>O que você procura?</h2></div><Link className="arrow-link" href="/garden-center">Todas as categorias →</Link></div><div className="category-grid">{productCategories.slice(0, 6).map((item) => <Link className="category-card" href="/garden-center" key={item.name}><div className="category-image"><Image src={item.image} alt="" fill sizes="(max-width: 700px) 100vw, 33vw" /></div><div><h3>{item.name}</h3><p>{item.description}</p><span>Consultar disponibilidade →</span></div></Link>)}</div></div></section>
+    <section className="feature-split container"><div className="feature-image"><Image src={imageBank.landscapeHero} alt="Paisagismo residencial com piscina e palmeiras realizado pela Plantart" fill sizes="(max-width: 900px) 100vw, 50vw" /></div><div className="feature-copy"><p className="eyebrow">Paisagismo</p><h2>Seu espaço pode respirar melhor.</h2><p>Projetos de paisagismo conectam vegetação, materiais e arquitetura para criar áreas externas mais acolhedoras e funcionais.</p><Link className="btn btn--primary" href="/paisagismo">Conheça o paisagismo</Link></div></section>
+    <section className="section works-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">Nossos trabalhos</p><h2>Projetos que já ganharam vida.</h2></div><Link className="arrow-link" href="/nossos-trabalhos">Ver galeria completa →</Link></div><div className="work-preview">{realWorkImages.map((item) => <Link href="/nossos-trabalhos" className="work-preview-card" key={item.src}><Image src={item.src} alt={item.alt} fill sizes="(max-width: 700px) 100vw, 50vw" /><span>{item.title}</span></Link>)}</div></div></section>
+    <section className="reasons-section"><div className="container"><div className="section-heading"><div><p className="eyebrow">Por que Plantart?</p><h2>Experiência para ajudar você a escolher melhor.</h2></div></div><div className="reason-grid"><article><strong>01</strong><h3>Escolha presencial</h3><p>Veja espécies, tamanhos, vasos e composições de perto.</p></article><article><strong>02</strong><h3>Jardinagem completa</h3><p>Encontre materiais para plantar, cuidar e manter seu jardim.</p></article><article><strong>03</strong><h3>Paisagismo</h3><p>Conte com uma frente dedicada a transformar áreas externas.</p></article></div></div></section>
+    <VisitCta />
+    <section className="section location-section container"><div className="location-copy"><p className="eyebrow">Onde estamos</p><h2>Venha visitar a Plantart.</h2><p>{plantart.addressLine1}<br />{plantart.addressLine2}<br />{plantart.addressLine3} · {plantart.cep}</p><p>A loja fica em Vicente Pires, Brasília/DF. Para quem pesquisa por floricultura ou Garden Center na região de Taguatinga, consulte a rota e confirme o melhor caminho até a loja.</p><p><strong>Horários</strong><br />Seg–Sex 08h–18h · Sáb 09h–18h · Dom 09h–13h</p><p><strong>Telefone e WhatsApp</strong><br /><a className="arrow-link" href={`tel:${plantart.telephoneE164}`}>{plantart.whatsappLabel} →</a></p><a className="btn btn--primary" href={plantart.mapsUrl} target="_blank" rel="noreferrer">Como chegar</a></div><MapBlock /></section>
+  </main>;
 }

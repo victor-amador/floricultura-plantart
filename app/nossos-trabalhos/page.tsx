@@ -2,21 +2,9 @@
 import type { Metadata } from "next";
 import { PortfolioLightbox } from "../components/PortfolioLightbox";
 import { plantart, realWorkImages, realWorkVideos } from "../lib/plantart";
+import { BreadcrumbJsonLd, pageMetadata } from "../lib/seo";
 
-export const metadata: Metadata = {
-  title: "Projetos de Paisagismo",
-  description:
-    "Portfólio visual com fotos e vídeos reais de trabalhos de paisagismo realizados pela Plantart em Brasília e Vicente Pires.",
-  alternates: {
-    canonical: "/nossos-trabalhos",
-  },
-  openGraph: {
-    title: "Projetos de Paisagismo | Plantart",
-    description:
-      "Alguns trabalhos reais de paisagismo da Plantart, com fotos tratadas para web e vídeos preservados no formato original.",
-    images: ["/trabalhos/paisagismo-piscina-palmeiras-plantart-tratada.jpg"],
-  },
-};
+export const metadata: Metadata = pageMetadata({ title: "Trabalhos de paisagismo", description: "Portfólio visual com fotos e vídeos reais de trabalhos de paisagismo da Plantart em Brasília/DF.", path: "/nossos-trabalhos", image: "/trabalhos/paisagismo-piscina-palmeiras-plantart-tratada.webp" });
 
 export default function NossosTrabalhosPage() {
   return (
@@ -41,6 +29,7 @@ export default function NossosTrabalhosPage() {
           </a>
         </div>
       </section>
+      <BreadcrumbJsonLd items={[{ name: "Início", path: "/" }, { name: "Nossos trabalhos", path: "/nossos-trabalhos" }]} />
 
       <section className="portfolio-intro">
         <p className="kicker">Trabalhos reais da Plantart</p>

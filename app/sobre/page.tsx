@@ -2,21 +2,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { imageBank, plantart } from "../lib/plantart";
+import { BreadcrumbJsonLd, pageMetadata } from "../lib/seo";
 
-export const metadata: Metadata = {
-  title: "Sobre a Plantart",
-  description:
-    "Conheça a Plantart, Garden Center & Paisagismo em Brasília/DF com mais de 24 anos de atuação e sede em Vicente Pires.",
-  alternates: {
-    canonical: "/sobre",
-  },
-  openGraph: {
-    title: "Sobre a Plantart",
-    description:
-      "A Plantart reúne Garden Center, plantas, jardinagem e paisagismo em Brasília há mais de 24 anos.",
-    images: ["/og.png"],
-  },
-};
+export const metadata: Metadata = pageMetadata({ title: "Sobre a Floricultura Plantart", description: "Conheça a Floricultura Plantart, Garden Center e paisagismo em Brasília/DF com mais de 24 anos de atuação.", path: "/sobre" });
 
 export default function SobrePage() {
   return (
@@ -28,6 +16,7 @@ export default function SobrePage() {
         </div>
         <img src={imageBank.foliage} alt="Folhagens ornamentais em composição natural" />
       </section>
+      <BreadcrumbJsonLd items={[{ name: "Início", path: "/" }, { name: "Sobre", path: "/sobre" }]} />
 
       <section className="about-facts">
         <div className="fact-xl">
